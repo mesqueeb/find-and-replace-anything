@@ -1,15 +1,9 @@
-# Find and replace anything 🎣
+import { isObject } from 'is-what'
 
-```
-npm i find-and-replace-anything
-```
-
-Replace one val with another or all occurrences in an object recursively. A simple & small integration.
-
-It's literally just this:
-
-```js
 /**
+ * Goes through an object recursively and replaces all occurences of the `find` value with `replaceWith`. Also works no non-objects.
+ *
+ * @export
  * @param {*} target Target can be anything
  * @param {*} find val to find
  * @param {*} replaceWith val to replace
@@ -27,4 +21,5 @@ function findAndReplaceRecursively (target, find, replaceWith) {
       return carry
     }, {})
 }
-```
+
+export default findAndReplaceRecursively
