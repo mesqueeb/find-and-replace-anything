@@ -9,7 +9,7 @@ import { isObject } from 'is-what'
  * @param {*} replaceWith val to replace
  * @returns the target with replaced values
  */
-function findAndReplaceRecursively (target, find, replaceWith) {
+function findAndReplaceRecursively (target: any, find: any, replaceWith: any): any {
   if (!isObject(target)) {
     if (target === find) return replaceWith
     return target

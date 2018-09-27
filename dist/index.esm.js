@@ -1,8 +1,4 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var isWhat = require('is-what');
+import { isObject } from 'is-what';
 
 /**
  * Goes through an object recursively and replaces all occurences of the `find` value with `replaceWith`. Also works no non-objects.
@@ -14,7 +10,7 @@ var isWhat = require('is-what');
  * @returns the target with replaced values
  */
 function findAndReplaceRecursively(target, find, replaceWith) {
-    if (!isWhat.isObject(target)) {
+    if (!isObject(target)) {
         if (target === find)
             return replaceWith;
         return target;
@@ -27,4 +23,4 @@ function findAndReplaceRecursively(target, find, replaceWith) {
     }, {});
 }
 
-exports.default = findAndReplaceRecursively;
+export default findAndReplaceRecursively;
