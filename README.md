@@ -6,6 +6,30 @@ npm i find-and-replace-anything
 
 Replace one val with another or all occurrences in an object recursively. A simple & small integration.
 
+## Usage
+
+This will find a value inside an object and replace it with another:
+
+- `findAndReplace(object, find, replace)`
+
+```js
+import findAndReplace from 'find-and-replace-anything'
+
+findAndReplace({_1: {_2: {_3: 'a'}}}, 'a', 'b')
+// returns {_1: {_2: {_3: 'b'}}}
+
+findAndReplace('works on "exact" strings as well', 'a', 'b')
+// returns 'works on "exact" strings as well'
+findAndReplace('a', 'a', 'b')
+// returns 'b'
+
+// works with other types as well:
+findAndReplace({nr: 1}, 1, 100)
+// returns {nr: 100}
+```
+
+## Source code
+
 It's literally just this:
 
 ```js
