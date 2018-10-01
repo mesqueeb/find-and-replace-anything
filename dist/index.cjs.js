@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var isWhat = require('is-what');
 
 /**
@@ -27,4 +25,4 @@ function findAndReplaceRecursively(target, find, replaceWith) {
     }, {});
 }
 
-exports.default = findAndReplaceRecursively;
+module.exports = findAndReplaceRecursively;
