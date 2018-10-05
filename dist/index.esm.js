@@ -1,4 +1,4 @@
-import { isObject } from 'is-what';
+import { isAnyObject } from 'is-what';
 
 /**
  * Goes through an object recursively and replaces all occurences of the `find` value with `replaceWith`. Also works no non-objects.
@@ -10,7 +10,7 @@ import { isObject } from 'is-what';
  * @returns the target with replaced values
  */
 function findAndReplaceRecursively(target, find, replaceWith) {
-    if (!isObject(target)) {
+    if (!isAnyObject(target)) {
         if (target === find)
             return replaceWith;
         return target;

@@ -12,7 +12,7 @@ var isWhat = require('is-what');
  * @returns the target with replaced values
  */
 function findAndReplaceRecursively(target, find, replaceWith) {
-    if (!isWhat.isObject(target)) {
+    if (!isWhat.isAnyObject(target)) {
         if (target === find)
             return replaceWith;
         return target;

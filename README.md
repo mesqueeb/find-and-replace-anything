@@ -28,6 +28,8 @@ findAndReplace({nr: 1}, 1, 100)
 // returns {nr: 100}
 ```
 
+> Please note that it will also recursively look inside special objects like JavaScript classes etc. So make sure you test the behaviour properly in those cases! (especially when your classes have read-only properties etc.)
+
 ## Source code
 
 It's literally just this:
