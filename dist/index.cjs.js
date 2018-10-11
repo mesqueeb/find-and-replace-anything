@@ -9,10 +9,13 @@ var isWhat = require('is-what');
  * @param {*} target Target can be anything
  * @param {*} find val to find
  * @param {*} replaceWith val to replace
- * @returns the target with replaced values
+ * @param {IConfig} [config={onlyPlainObjects: false}]
+ * @returns {*} the target with replaced values
  */
-function findAndReplaceRecursively(target, find, replaceWith) {
-    if (!isWhat.isAnyObject(target)) {
+function findAndReplaceRecursively(target, find, replaceWith, config) {
+    if (config === void 0) { config = { onlyPlainObjects: false }; }
+    if ((config.onlyPlainObjects === false && !isWhat.isAnyObject(target)) ||
+        (config.onlyPlainObjects === true && !isWhat.isObject(target))) {
         if (target === find)
             return replaceWith;
         return target;
@@ -20,7 +23,7 @@ function findAndReplaceRecursively(target, find, replaceWith) {
     return Object.keys(target)
         .reduce(function (carry, key) {
         var val = target[key];
-        carry[key] = findAndReplaceRecursively(val, find, replaceWith);
+        carry[key] = findAndReplaceRecursively(val, find, replaceWith, config);
         return carry;
     }, {});
 }
