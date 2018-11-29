@@ -1,5 +1,5 @@
 import test from 'ava'
-import findAndReplace from '../dist/index.cjs'
+import {findAndReplace, findAndReplaceIf} from '../dist/index.cjs'
 
 test('findAndReplace', t => {
   let res
@@ -8,6 +8,20 @@ test('findAndReplace', t => {
   res = findAndReplace('_', 'a', 'b')
   t.is(res, '_')
   res = findAndReplace('a', 'a', 'b')
+  t.is(res, 'b')
+})
+
+test('findAndReplaceIf', t => {
+  let res
+  function checkFn (foundVal) {
+    if (foundVal === 'a') return 'b'
+    return foundVal
+  }
+  res = findAndReplaceIf({a: {b: {c: 'a'}}}, checkFn)
+  t.deepEqual(res, {a: {b: {c: 'b'}}})
+  res = findAndReplaceIf('_', checkFn)
+  t.is(res, '_')
+  res = findAndReplaceIf('a', checkFn)
   t.is(res, 'b')
 })
 

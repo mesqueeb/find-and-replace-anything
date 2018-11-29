@@ -1,4 +1,4 @@
-import { isAnyObject, isObject } from 'is-what'
+import { isAnyObject, isPlainObject } from 'is-what'
 
 type IConfig = {
   onlyPlainObjects: boolean
@@ -14,7 +14,7 @@ type IConfig = {
  * @param {IConfig} [config={onlyPlainObjects: false}]
  * @returns {*} the target with replaced values
  */
-function findAndReplaceRecursively (
+export function findAndReplace (
   target: any,
   find: any,
   replaceWith: any,
@@ -22,7 +22,7 @@ function findAndReplaceRecursively (
 ): any {
   if (
     (config.onlyPlainObjects === false && !isAnyObject(target)) ||
-    (config.onlyPlainObjects === true && !isObject(target))
+    (config.onlyPlainObjects === true && !isPlainObject(target))
   ) {
     if (target === find) return replaceWith
     return target
@@ -30,9 +30,28 @@ function findAndReplaceRecursively (
   return Object.keys(target)
     .reduce((carry, key) => {
       const val = target[key]
-      carry[key] = findAndReplaceRecursively(val, find, replaceWith, config)
+      carry[key] = findAndReplace(val, find, replaceWith, config)
       return carry
     }, {})
 }
 
-export default findAndReplaceRecursively
+/**
+ * Goes through an object recursively and replaces all props with what's is returned in the `checkFn`. Also works no non-objects.
+ *
+ * @export
+ * @param {*} target Target can be anything
+ * @param {*} checkFn a function that will receive the `foundVal`
+ * @returns {*} the target with replaced values
+ */
+export function findAndReplaceIf (
+  target: any,
+  checkFn: (foundVal: any) => any,
+): any {
+  if (!isPlainObject(target)) return checkFn(target)
+  return Object.keys(target)
+    .reduce((carry, key) => {
+      const val = target[key]
+      carry[key] = findAndReplaceIf(val, checkFn)
+      return carry
+    }, {})
+}

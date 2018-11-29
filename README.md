@@ -6,14 +6,19 @@ npm i find-and-replace-anything
 
 Replace one val with another or all occurrences in an object recursively. A simple & small integration.
 
-## Usage
+There are two methods you can import and use:
+
+- **findAndReplace** find `a` replace with `b` (recursively on an object)
+- **findAndReplaceIf** execute a function on every prop in an object recursively
+
+## find and replace
 
 This will find a value inside an object and replace it with another:
 
 - `findAndReplace(object, find, replace)`
 
 ```js
-import findAndReplace from 'find-and-replace-anything'
+import { findAndReplace } from 'find-and-replace-anything'
 
 findAndReplace({_1: {_2: {_3: 'a'}}}, 'a', 'b')
   // returns
@@ -33,7 +38,33 @@ findAndReplace({nr: 1}, 1, 100)
   {nr: 100}
 ```
 
+## find and replace IF
+
+This will execute a provided function to every prop in the object recursively. The "check" function provided will receive the prop's value as param:
+
+- `findAndReplaceIf(object, checkFn)` checkFn receives each `propVal` of the object recursively
+
+```js
+import { findAndReplaceIf } from 'find-and-replace-anything'
+
+const checkFn = (foundVal) => {
+  if (foundVal === 'a') return 'b'
+  return foundVal
+  // always return original foundVal when no replacement occurs
+}
+
+findAndReplaceIf({_1: {_2: {_3: 'a'}}}, checkFn)
+  // returns
+  {_1: {_2: {_3: 'b'}}}
+
+findAndReplace('a', checkFn)
+  // returns
+  'b'
+```
+
 ## A note on plain objects vs classes
+
+> only for `findAndReplace()`
 
 Please note that it will also recursively look inside special objects like JavaScript classes etc. So make sure you test the behaviour properly in those cases! (especially when your classes have read-only properties etc.)
 
