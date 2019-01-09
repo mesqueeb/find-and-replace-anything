@@ -9,7 +9,15 @@ Replace one val with another or all occurrences in an object recursively. A simp
 There are two methods you can import and use:
 
 - **findAndReplace** find `a` replace with `b` (recursively on an object)
-- **findAndReplaceIf** execute a function on every prop in an object recursively
+- **findAndReplaceIf** execute a function on every prop in an object recursively, and replace the prop with what the function returns
+
+## Meet the family
+
+- [find-and-replace-anything](https://github.com/mesqueeb/find-and-replace-anything)
+- [merge-anything](https://github.com/mesqueeb/merge-anything)
+- [filter-anything](https://github.com/mesqueeb/filter-anything)
+- copy-anything (WIP)
+- [is-what](https://github.com/mesqueeb/is-what)
 
 ## find and replace
 
