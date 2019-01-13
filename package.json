@@ -15,8 +15,17 @@
   },
   "keywords": [
     "find-and-replace",
+    "find-replace",
+    "find-and-replace-if",
     "javascript",
-    "recursively"
+    "recursively",
+    "has-prop",
+    "find-prop",
+    "replace-prop-value",
+    "replace-value",
+    "search-prop",
+    "search-object-prop",
+    "replace-if"
   ],
   "author": "Luca Ban - Mesqueeb",
   "license": "MIT",
