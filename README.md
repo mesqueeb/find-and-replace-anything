@@ -13,11 +13,12 @@ There are two methods you can import and use:
 
 ## Meet the family
 
-- [find-and-replace-anything](https://github.com/mesqueeb/find-and-replace-anything)
-- [merge-anything](https://github.com/mesqueeb/merge-anything)
-- [filter-anything](https://github.com/mesqueeb/filter-anything)
-- copy-anything (WIP)
-- [is-what](https://github.com/mesqueeb/is-what)
+- [find-and-replace-anything 🎣](https://github.com/mesqueeb/find-and-replace-anything)
+- [merge-anything 🥡](https://github.com/mesqueeb/merge-anything)
+- [filter-anything ⚔️](https://github.com/mesqueeb/filter-anything)
+- [compare-anything 🛰](https://github.com/mesqueeb/compare-anything)
+- [copy-anything 🎭](https://github.com/mesqueeb/copy-anything)
+- [is-what 🙉](https://github.com/mesqueeb/is-what)
 
 ## find and replace
 
@@ -55,7 +56,7 @@ This will execute a provided function to every prop in the object recursively. T
 ```js
 import { findAndReplaceIf } from 'find-and-replace-anything'
 
-const checkFn = (foundVal) => {
+function checkFn (foundVal) {
   if (foundVal === 'a') return 'b'
   return foundVal
   // always return original foundVal when no replacement occurs
