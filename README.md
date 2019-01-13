@@ -18,6 +18,7 @@ There are two methods you can import and use:
 - [filter-anything ⚔️](https://github.com/mesqueeb/filter-anything)
 - [compare-anything 🛰](https://github.com/mesqueeb/compare-anything)
 - [copy-anything 🎭](https://github.com/mesqueeb/copy-anything)
+- [flatten-anything 🏏](https://github.com/mesqueeb/flatten-anything)
 - [is-what 🙉](https://github.com/mesqueeb/is-what)
 
 ## find and replace
