@@ -30,9 +30,9 @@ This will find a value inside an object and replace it with another:
 ```js
 import { findAndReplace } from 'find-and-replace-anything'
 
-findAndReplace({_1: {_2: {_3: 'a'}}}, 'a', 'b')
+findAndReplace({deep: {nested: {prop: 'a'}}}, 'a', 'b')
   // returns
-  {_1: {_2: {_3: 'b'}}}
+  {deep: {nested: {prop: 'b'}}}
 
 findAndReplace('works on "exact" strings as well', 'a', 'b')
   // returns
