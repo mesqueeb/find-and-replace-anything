@@ -2,13 +2,39 @@ import test from 'ava'
 import {findAndReplace, findAndReplaceIf} from '../dist/index.cjs'
 
 test('findAndReplace', t => {
-  let res
-  res = findAndReplace({a: {b: {c: 'a'}}}, 'a', 'b')
+  let res, ori
+  ori = {a: {b: {c: 'a'}}}
+  res = findAndReplace(ori, 'a', 'b')
   t.deepEqual(res, {a: {b: {c: 'b'}}})
   res = findAndReplace('_', 'a', 'b')
   t.is(res, '_')
   res = findAndReplace('a', 'a', 'b')
   t.is(res, 'b')
+})
+
+test('findAndReplace does not modify objects', t => {
+  let res, ori
+  ori = {a: {b: {c: 'a'}, d: 1}}
+  res = findAndReplace(ori, 'a', 'b')
+  t.deepEqual(res, {a: {b: {c: 'b'}, d: 1}})
+  t.deepEqual(ori, {a: {b: {c: 'a'}, d: 1}})
+  res.a.b = 1
+  t.deepEqual(res, {a: {b: 1, d: 1}})
+  t.deepEqual(ori, {a: {b: {c: 'a'}, d: 1}})
+  res.a.d = 2
+  t.deepEqual(res, {a: {b: 1, d: 2}})
+  t.deepEqual(ori, {a: {b: {c: 'a'}, d: 1}})
+  ori.a.d = 3
+  t.deepEqual(res, {a: {b: 1, d: 2}})
+  t.deepEqual(ori, {a: {b: {c: 'a'}, d: 3}})
+})
+
+test('findAndReplace does not work with objects', t => {
+  let res, ori
+  ori = {a: {b: {c: 'a'}}}
+  res = findAndReplace(ori, {c: 'a'}, {c: 'b'})
+  t.deepEqual(res, {a: {b: {c: 'a'}}})
+  t.deepEqual(ori, {a: {b: {c: 'a'}}})
 })
 
 test('findAndReplaceIf', t => {
