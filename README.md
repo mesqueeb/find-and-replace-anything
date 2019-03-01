@@ -57,16 +57,26 @@ This will execute a provided function to every prop in the object recursively. T
 ```js
 import { findAndReplaceIf } from 'find-and-replace-anything'
 
+// function that replaces 'a' with 'b'
 function checkFn (foundVal) {
   if (foundVal === 'a') return 'b'
   return foundVal
   // always return original foundVal when no replacement occurs
 }
 
-findAndReplaceIf({_1: {_2: {_3: 'a'}}}, checkFn)
+findAndReplaceIf({deep: {nested: {prop: 'a'}}}, checkFn)
   // returns
-  {_1: {_2: {_3: 'b'}}}
+  {deep: {nested: {prop: 'b'}}}
 
+  // this is what gets executed in order:
+  checkFn({deep: {nested: {prop: 'a'}}})
+  checkFn({nested: {prop: 'a'}})
+  checkFn({prop: 'a'})
+  checkFn('a')
+  // the final execution replaces 'a' with 'b'
+  // and then returns the entire object
+
+// also works on non-objects
 findAndReplace('a', checkFn)
   // returns
   'b'
