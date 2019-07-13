@@ -1,6 +1,6 @@
 {
   "name": "find-and-replace-anything",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Replace one val with another or all occurrences in an object recursively. A simple & small integration.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -35,14 +35,14 @@
   "homepage": "https://github.com/mesqueeb/find-and-replace-anything#readme",
   "devDependencies": {
     "@ava/babel-preset-stage-4": "^2.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
     "ava": "^1.4.1",
     "rollup": "^0.65.2",
-    "rollup-plugin-typescript2": "^0.21.1",
-    "typescript": "^3.5.1"
+    "rollup-plugin-typescript2": "^0.21.2",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
-    "is-what": "^3.2.3"
+    "is-what": "^3.2.4"
   }
 }
