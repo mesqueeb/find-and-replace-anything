@@ -1,5 +1,32 @@
 import test from 'ava'
 import { findAndReplace, findAndReplaceIf } from '../src/index'
+import { isPlainObject } from 'is-what'
+
+test('findAndReplace in arrays', t => {
+  const res = findAndReplace({ a: [{ b: 'c' }] }, 'c', 'd', { checkArrayValues: true })
+  t.deepEqual(res, {
+    a: [{ b: 'd' }],
+  })
+})
+
+test('findAndReplaceIf in arrays', t => {
+  function replacer (foundVal) {
+    return foundVal === 'c' ? 'd' : foundVal
+  }
+  t.deepEqual(findAndReplaceIf({ a: ['c'] }, replacer, { checkArrayValues: true }), {
+    a: ['d'],
+  })
+})
+
+test('findAndReplaceIf in arrays double nested', t => {
+  const replace = foundVal => (foundVal === 'c' ? 'd' : foundVal)
+  function replacer (foundVal) {
+    return isPlainObject(foundVal) ? findAndReplaceIf(foundVal, replace) : foundVal
+  }
+  t.deepEqual(findAndReplaceIf({ a: [{ b: 'c' }] }, replacer, { checkArrayValues: true }), {
+    a: [{ b: 'd' }],
+  })
+})
 
 test('findAndReplace nested strings', t => {
   t.deepEqual(findAndReplace({ a: { b: { c: 'a' } } }, 'a', 'b'), { a: { b: { c: 'b' } } })

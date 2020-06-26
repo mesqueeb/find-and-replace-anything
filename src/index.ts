@@ -1,7 +1,8 @@
-import { isAnyObject, isPlainObject, isNaNValue } from 'is-what'
+import { isAnyObject, isPlainObject, isNaNValue, isArray } from 'is-what'
 
-type IConfig = {
-  onlyPlainObjects: boolean
+type Config = {
+  onlyPlainObjects?: boolean
+  checkArrayValues?: boolean
 }
 
 /**
@@ -11,22 +12,31 @@ type IConfig = {
  * @param {*} target Target can be anything
  * @param {*} find val to find
  * @param {*} replaceWith val to replace
- * @param {IConfig} [config={onlyPlainObjects: false}]
+ * @param {Config} [config={onlyPlainObjects: false, checkArrayValues: false}]
  * @returns {*} the target with replaced values
  */
 export function findAndReplace (
   target: any,
   find: any,
   replaceWith: any,
-  config: IConfig = { onlyPlainObjects: false }
+  config: Config = { onlyPlainObjects: false, checkArrayValues: false }
 ): any {
-  if (
-    (config.onlyPlainObjects === false && !isAnyObject(target)) ||
-    (config.onlyPlainObjects === true && !isPlainObject(target))
-  ) {
-    if (target === find || (isNaNValue(target) && isNaNValue(find))) return replaceWith
-    return target
+  const _target = target
+  // arrays
+  if (config.checkArrayValues && isArray(_target) && !isAnyObject(_target)) {
+    return (_target as any[]).map(value => findAndReplace(value, find, replaceWith, config))
   }
+  // non-objects
+  if (
+    (!config.onlyPlainObjects && !isAnyObject(_target)) ||
+    (config.onlyPlainObjects === true && !isPlainObject(_target))
+  ) {
+    if (_target === find || (isNaNValue(_target) && isNaNValue(find))) {
+      return replaceWith
+    }
+    return _target
+  }
+  // objects
   return Object.entries(target).reduce((carry, [key, val]) => {
     carry[key] = findAndReplace(val, find, replaceWith, config)
     return carry
@@ -36,12 +46,16 @@ export function findAndReplace (
 export function _findAndReplaceIf (
   target: any,
   checkFn: (foundVal: any, propKey: string | undefined) => any,
-  propKey: string | undefined
+  propKey: string | undefined,
+  config: Config = { onlyPlainObjects: true, checkArrayValues: false }
 ): any {
-  const targetAfterCheck = checkFn(target, propKey)
-  if (!isPlainObject(target)) return targetAfterCheck
-  return Object.entries(targetAfterCheck).reduce((carry, [key, val]) => {
-    carry[key] = _findAndReplaceIf(val, checkFn, key)
+  const _target = checkFn(target, propKey)
+  if (config.checkArrayValues && isArray(_target) && !isAnyObject(_target)) {
+    return (_target as any[]).map(value => checkFn(value, undefined))
+  }
+  if (!isPlainObject(_target)) return _target
+  return Object.entries(_target).reduce((carry, [key, val]) => {
+    carry[key] = _findAndReplaceIf(val, checkFn, key, config)
     return carry
   }, {})
 }
@@ -52,11 +66,13 @@ export function _findAndReplaceIf (
  * @export
  * @param {*} target Target can be anything
  * @param {(foundVal: any, propKey: string | undefined) => any} checkFn a function that will receive the `foundVal`
+ * @param {Config} [config={onlyPlainObjects: true, checkArrayValues: false}]
  * @returns {*} the target with replaced values
  */
 export function findAndReplaceIf (
   target: any,
-  checkFn: (foundVal: any, propKey: string | undefined) => any
+  checkFn: (foundVal: any, propKey: string | undefined) => any,
+  config: Config = { onlyPlainObjects: true, checkArrayValues: false }
 ): any {
-  return _findAndReplaceIf(target, checkFn, undefined)
+  return _findAndReplaceIf(target, checkFn, undefined, config)
 }
