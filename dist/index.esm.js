@@ -36,7 +36,7 @@ function _findAndReplaceIf(target, checkFn, propKey, config) {
     if (config === void 0) { config = { onlyPlainObjects: true, checkArrayValues: false }; }
     var _target = checkFn(target, propKey);
     if (config.checkArrayValues && isArray(_target) && !isAnyObject(_target)) {
-        return _target.map(function (value) { return checkFn(value, undefined); });
+        return _target.map(function (value) { return _findAndReplaceIf(value, checkFn, undefined, config); });
     }
     if (!isPlainObject(_target))
         return _target;

@@ -51,7 +51,7 @@ export function _findAndReplaceIf (
 ): any {
   const _target = checkFn(target, propKey)
   if (config.checkArrayValues && isArray(_target) && !isAnyObject(_target)) {
-    return (_target as any[]).map(value => checkFn(value, undefined))
+    return (_target as any[]).map(value => _findAndReplaceIf(value, checkFn, undefined, config))
   }
   if (!isPlainObject(_target)) return _target
   return Object.entries(_target).reduce((carry, [key, val]) => {

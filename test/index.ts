@@ -10,21 +10,16 @@ test('findAndReplace in arrays', t => {
 })
 
 test('findAndReplaceIf in arrays', t => {
-  function replacer (foundVal) {
-    return foundVal === 'c' ? 'd' : foundVal
-  }
+  const replacer = foundVal => (foundVal === 'c' ? 'd' : foundVal)
   t.deepEqual(findAndReplaceIf({ a: ['c'] }, replacer, { checkArrayValues: true }), {
     a: ['d'],
   })
 })
 
 test('findAndReplaceIf in arrays double nested', t => {
-  const replace = foundVal => (foundVal === 'c' ? 'd' : foundVal)
-  function replacer (foundVal) {
-    return isPlainObject(foundVal) ? findAndReplaceIf(foundVal, replace) : foundVal
-  }
-  t.deepEqual(findAndReplaceIf({ a: [{ b: 'c' }] }, replacer, { checkArrayValues: true }), {
-    a: [{ b: 'd' }],
+  const replacer = foundVal => (foundVal === 'c' ? 'd' : foundVal)
+  t.deepEqual(findAndReplaceIf({ a: [{ b: 'c' }, 'c'] }, replacer, { checkArrayValues: true }), {
+    a: [{ b: 'd' }, 'd'],
   })
 })
 
