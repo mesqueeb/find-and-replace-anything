@@ -18,13 +18,12 @@ function findAndReplace(target, find, replaceWith, config) {
     if (config === void 0) { config = { onlyPlainObjects: false }; }
     if ((config.onlyPlainObjects === false && !isWhat.isAnyObject(target)) ||
         (config.onlyPlainObjects === true && !isWhat.isPlainObject(target))) {
-        if (target === find)
+        if (target === find || (isWhat.isNaNValue(target) && isWhat.isNaNValue(find)))
             return replaceWith;
         return target;
     }
-    return Object.keys(target)
-        .reduce(function (carry, key) {
-        var val = target[key];
+    return Object.entries(target).reduce(function (carry, _a) {
+        var key = _a[0], val = _a[1];
         carry[key] = findAndReplace(val, find, replaceWith, config);
         return carry;
     }, {});
@@ -40,8 +39,7 @@ function findAndReplace(target, find, replaceWith, config) {
 function findAndReplaceIf(target, checkFn) {
     if (!isWhat.isPlainObject(target))
         return checkFn(target);
-    return Object.keys(target)
-        .reduce(function (carry, key) {
+    return Object.keys(target).reduce(function (carry, key) {
         var val = target[key];
         carry[key] = findAndReplaceIf(val, checkFn);
         return carry;

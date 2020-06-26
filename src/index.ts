@@ -1,4 +1,4 @@
-import { isAnyObject, isPlainObject } from 'is-what'
+import { isAnyObject, isPlainObject, isNaNValue } from 'is-what'
 
 type IConfig = {
   onlyPlainObjects: boolean
@@ -18,21 +18,19 @@ export function findAndReplace (
   target: any,
   find: any,
   replaceWith: any,
-  config: IConfig = {onlyPlainObjects: false}
+  config: IConfig = { onlyPlainObjects: false }
 ): any {
   if (
     (config.onlyPlainObjects === false && !isAnyObject(target)) ||
     (config.onlyPlainObjects === true && !isPlainObject(target))
   ) {
-    if (target === find) return replaceWith
+    if (target === find || (isNaNValue(target) && isNaNValue(find))) return replaceWith
     return target
   }
-  return Object.keys(target)
-    .reduce((carry, key) => {
-      const val = target[key]
-      carry[key] = findAndReplace(val, find, replaceWith, config)
-      return carry
-    }, {})
+  return Object.entries(target).reduce((carry, [key, val]) => {
+    carry[key] = findAndReplace(val, find, replaceWith, config)
+    return carry
+  }, {})
 }
 
 /**
@@ -43,15 +41,11 @@ export function findAndReplace (
  * @param {*} checkFn a function that will receive the `foundVal`
  * @returns {*} the target with replaced values
  */
-export function findAndReplaceIf (
-  target: any,
-  checkFn: (foundVal: any) => any,
-): any {
+export function findAndReplaceIf (target: any, checkFn: (foundVal: any) => any): any {
   if (!isPlainObject(target)) return checkFn(target)
-  return Object.keys(target)
-    .reduce((carry, key) => {
-      const val = target[key]
-      carry[key] = findAndReplaceIf(val, checkFn)
-      return carry
-    }, {})
+  return Object.keys(target).reduce((carry, key) => {
+    const val = target[key]
+    carry[key] = findAndReplaceIf(val, checkFn)
+    return carry
+  }, {})
 }

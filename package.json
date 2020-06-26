@@ -1,7 +1,7 @@
 {
   "name": "find-and-replace-anything",
   "sideEffects": false,
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Replace one val with another or all occurrences in an object recursively. A simple & small integration.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -38,28 +38,25 @@
   "homepage": "https://github.com/mesqueeb/find-and-replace-anything#readme",
   "devDependencies": {
     "@ava/babel-preset-stage-4": "^2.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
-    "@typescript-eslint/eslint-plugin": "^2.23.0",
-    "@typescript-eslint/parser": "^2.23.0",
-    "ava": "^3.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "ava": "^3.9.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-tree-shaking": "^1.8.0",
     "rollup": "^1.32.1",
     "rollup-plugin-typescript2": "^0.26.0",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.9.5"
   },
   "dependencies": {
-    "is-what": "^3.7.1"
+    "is-what": "^3.9.1"
   },
   "ava": {
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
+    "extensions": ["ts"],
+    "require": ["tsconfig-paths/register", "ts-node/register"]
   }
 }

@@ -1,15 +1,25 @@
 import test from 'ava'
 import { findAndReplace, findAndReplaceIf } from '../src/index'
 
-test('findAndReplace', t => {
-  let res, ori
-  ori = { a: { b: { c: 'a' } } }
-  res = findAndReplace(ori, 'a', 'b')
-  t.deepEqual(res, { a: { b: { c: 'b' } } })
-  res = findAndReplace('_', 'a', 'b')
-  t.is(res, '_')
-  res = findAndReplace('a', 'a', 'b')
-  t.is(res, 'b')
+test('findAndReplace nested strings', t => {
+  t.deepEqual(findAndReplace({ a: { b: { c: 'a' } } }, 'a', 'b'), { a: { b: { c: 'b' } } })
+})
+
+test('findAndReplace strings', t => {
+  t.is(findAndReplace('a', 'a', 'b'), 'b')
+  t.is(findAndReplace('_', 'a', 'b'), '_')
+})
+
+test('findAndReplace undefined', t => {
+  t.deepEqual(findAndReplace({ undefined: undefined }, undefined, 'undefined'), {
+    undefined: 'undefined',
+  })
+})
+test('findAndReplace NaN', t => {
+  t.deepEqual(findAndReplace({ NaN: NaN }, NaN, 'NaN'), { NaN: 'NaN' })
+})
+test('findAndReplace null', t => {
+  t.deepEqual(findAndReplace({ null: null }, null, 'null'), { null: 'null' })
 })
 
 test('findAndReplace does not modify objects', t => {
