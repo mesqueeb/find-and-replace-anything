@@ -28,23 +28,28 @@ function findAndReplace(target, find, replaceWith, config) {
         return carry;
     }, {});
 }
-/**
- * Goes through an object recursively and replaces all props with what's is returned in the `checkFn`. Also works no non-objects.
- *
- * @export
- * @param {*} target Target can be anything
- * @param {*} checkFn a function that will receive the `foundVal`
- * @returns {*} the target with replaced values
- */
-function findAndReplaceIf(target, checkFn) {
+function _findAndReplaceIf(target, checkFn, propKey) {
+    var targetAfterCheck = checkFn(target, propKey);
     if (!isWhat.isPlainObject(target))
-        return checkFn(target);
-    return Object.keys(target).reduce(function (carry, key) {
-        var val = target[key];
-        carry[key] = findAndReplaceIf(val, checkFn);
+        return targetAfterCheck;
+    return Object.entries(targetAfterCheck).reduce(function (carry, _a) {
+        var key = _a[0], val = _a[1];
+        carry[key] = _findAndReplaceIf(val, checkFn, key);
         return carry;
     }, {});
 }
+/**
+ * Goes through an object recursively and replaces all props with what's is returned in the `checkFn`. Also works on non-objects. `checkFn` is triggered on every single level of any value/object.
+ *
+ * @export
+ * @param {*} target Target can be anything
+ * @param {(foundVal: any, propKey: string | undefined) => any} checkFn a function that will receive the `foundVal`
+ * @returns {*} the target with replaced values
+ */
+function findAndReplaceIf(target, checkFn) {
+    return _findAndReplaceIf(target, checkFn, undefined);
+}
 
+exports._findAndReplaceIf = _findAndReplaceIf;
 exports.findAndReplace = findAndReplace;
 exports.findAndReplaceIf = findAndReplaceIf;
