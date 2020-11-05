@@ -53,7 +53,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "is-what": "^3.9.1"
+    "is-what": "^3.11.3"
   },
   "ava": {
     "extensions": ["ts"],
