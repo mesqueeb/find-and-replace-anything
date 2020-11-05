@@ -10,6 +10,7 @@ module.exports = {
     'prettier/@typescript-eslint',
   ],
   rules: {
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
     'tree-shaking/no-side-effects-in-initialization': 'error',
