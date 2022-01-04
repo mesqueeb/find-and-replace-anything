@@ -1,5 +1,8 @@
 # Find and replace anything 🎣
 
+<a href="https://www.npmjs.com/package/find-and-replace-anything"><img src="https://img.shields.io/npm/v/find-and-replace-anything.svg" alt="Total Downloads"></a>
+<a href="https://www.npmjs.com/package/find-and-replace-anything"><img src="https://img.shields.io/npm/dw/find-and-replace-anything.svg" alt="Latest Stable Version"></a>
+
 ```
 npm i find-and-replace-anything
 ```
