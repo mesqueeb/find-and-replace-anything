@@ -1,7 +1,7 @@
 {
   "name": "find-and-replace-anything",
   "sideEffects": false,
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "Replace one val with another or all occurrences in an object recursively. A simple & small integration.",
   "module": "./dist/index.es.js",
   "main": "./dist/index.cjs",
