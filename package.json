@@ -65,11 +65,11 @@
     "vitest": "^0.2.1"
   },
   "dependencies": {
-    "is-what": "^4.1.1"
+    "is-what": "^3.14.1"
   },
   "np": {
     "yarn": false,
-    "branch": "production"
+    "branch": "legacy"
   },
   "eslintConfig": {
     "ignorePatterns": [
