@@ -37,7 +37,7 @@ export function findAndReplace (
     return _target
   }
   // objects
-  return Object.entries(target).reduce((carry, [key, val]) => {
+  return Object.entries(target).reduce<any>((carry, [key, val]) => {
     carry[key] = findAndReplace(val, find, replaceWith, config)
     return carry
   }, {})
@@ -54,7 +54,7 @@ export function _findAndReplaceIf (
     return (_target as any[]).map(value => _findAndReplaceIf(value, checkFn, undefined, config))
   }
   if (!isPlainObject(_target)) return _target
-  return Object.entries(_target).reduce((carry, [key, val]) => {
+  return Object.entries(_target).reduce<any>((carry, [key, val]) => {
     carry[key] = _findAndReplaceIf(val, checkFn, key, config)
     return carry
   }, {})
