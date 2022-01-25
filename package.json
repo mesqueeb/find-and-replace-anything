@@ -1,7 +1,6 @@
 {
   "name": "find-and-replace-anything",
   "sideEffects": false,
-  "type": "module",
   "version": "2.2.3",
   "description": "Replace one val with another or all occurrences in an object recursively. A simple & small integration.",
   "module": "./dist/index.es.js",
@@ -17,10 +16,6 @@
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": ">=12.13",
-    "npm": ">=7"
-  },
   "scripts": {
     "test": "vitest run",
     "lint": "tsc --noEmit && eslint ./src --ext .ts",
