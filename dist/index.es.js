@@ -30,15 +30,19 @@ function findAndReplace(target, find, replaceWith, config = { onlyPlainObjects: 
         return carry;
     }, {});
 }
-function _findAndReplaceIf(target, checkFn, propKey, config = { onlyPlainObjects: true, checkArrayValues: false }) {
-    const _target = checkFn(target, propKey);
+function _findAndReplaceIf(target, mainObject, checkFn, propKey, propPath, config = { onlyPlainObjects: true, checkArrayValues: false }) {
+    const _target = checkFn(target, propKey, propPath, mainObject);
     if (config.checkArrayValues && isArray(_target) && !isAnyObject(_target)) {
-        return _target.map(value => _findAndReplaceIf(value, checkFn, undefined, config));
+        return _target.map((value, index) => {
+            const ppath = propPath !== undefined ? [propPath, index].join('.') : String(index);
+            return _findAndReplaceIf(value, mainObject, checkFn, undefined, ppath, config);
+        });
     }
     if (!isPlainObject(_target))
         return _target;
     return Object.entries(_target).reduce((carry, [key, val]) => {
-        carry[key] = _findAndReplaceIf(val, checkFn, key, config);
+        const ppath = propPath !== undefined ? [propPath, key].join('.') : key;
+        carry[key] = _findAndReplaceIf(val, mainObject, checkFn, key, ppath, config);
         return carry;
     }, {});
 }
@@ -52,7 +56,7 @@ function _findAndReplaceIf(target, checkFn, propKey, config = { onlyPlainObjects
  * @returns {*} the target with replaced values
  */
 function findAndReplaceIf(target, checkFn, config = { onlyPlainObjects: true, checkArrayValues: false }) {
-    return _findAndReplaceIf(target, checkFn, undefined, config);
+    return _findAndReplaceIf(target, target, checkFn, undefined, undefined, config);
 }
 
 export { _findAndReplaceIf, findAndReplace, findAndReplaceIf };
