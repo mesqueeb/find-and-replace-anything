@@ -2,7 +2,7 @@
   "name": "find-and-replace-anything",
   "sideEffects": false,
   "type": "module",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Replace one val with another or all occurrences in an object recursively. A simple & small integration.",
   "module": "./dist/index.es.js",
   "main": "./dist/index.cjs",
@@ -45,6 +45,7 @@
     "replace-if"
   ],
   "author": "Luca Ban - Mesqueeb",
+  "contributors": ["Ricardo Sánchez <me@soknife.dev> (http://soknife.dev/)"],
   "funding": "https://github.com/sponsors/mesqueeb",
   "license": "MIT",
   "bugs": {

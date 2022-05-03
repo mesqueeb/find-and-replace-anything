@@ -13,7 +13,7 @@ declare type Config = {
  * @returns {*} the target with replaced values
  */
 export declare function findAndReplace(target: any, find: any, replaceWith: any, config?: Config): any;
-export declare function _findAndReplaceIf(target: any, checkFn: (foundVal: any, propKey: string | undefined) => any, propKey: string | undefined, config?: Config): any;
+export declare function _findAndReplaceIf(target: any, mainObject: any, checkFn: (foundVal: any, propKey: string | undefined, propPath: string | undefined, mainObject: any) => any, propKey: string | undefined, propPath: string | undefined, config?: Config): any;
 /**
  * Goes through an object recursively and replaces all props with what's is returned in the `checkFn`. Also works on non-objects. `checkFn` is triggered on every single level of any value/object.
  *

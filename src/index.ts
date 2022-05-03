@@ -45,17 +45,23 @@ export function findAndReplace (
 
 export function _findAndReplaceIf (
   target: any,
-  checkFn: (foundVal: any, propKey: string | undefined) => any,
+  mainObject: any,
+  checkFn: (foundVal: any, propKey: string | undefined, propPath: string | undefined, mainObject: any ) => any,
   propKey: string | undefined,
+  propPath: string | undefined,
   config: Config = { onlyPlainObjects: true, checkArrayValues: false }
 ): any {
-  const _target = checkFn(target, propKey)
+  const _target = checkFn(target, propKey, propPath, mainObject)
   if (config.checkArrayValues && isArray(_target) && !isAnyObject(_target)) {
-    return (_target as any[]).map(value => _findAndReplaceIf(value, checkFn, undefined, config))
+    return (_target as any[]).map((value, index) => {
+      const ppath = propPath !== undefined ? [propPath, index].join('.') : String(index);
+      return _findAndReplaceIf(value, mainObject, checkFn, undefined, ppath, config)
+    })
   }
   if (!isPlainObject(_target)) return _target
   return Object.entries(_target).reduce<any>((carry, [key, val]) => {
-    carry[key] = _findAndReplaceIf(val, checkFn, key, config)
+    const ppath = propPath !== undefined ? [propPath, key].join('.') : key;
+    carry[key] = _findAndReplaceIf(val, mainObject, checkFn, key, ppath, config)
     return carry
   }, {})
 }
@@ -74,5 +80,5 @@ export function findAndReplaceIf (
   checkFn: (foundVal: any, propKey: string | undefined) => any,
   config: Config = { onlyPlainObjects: true, checkArrayValues: false }
 ): any {
-  return _findAndReplaceIf(target, checkFn, undefined, config)
+  return _findAndReplaceIf(target, target, checkFn, undefined, undefined, config)
 }
