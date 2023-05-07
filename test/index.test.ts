@@ -1,6 +1,5 @@
 import { test, expect } from 'vitest'
 import { findAndReplace, findAndReplaceIf } from '../src/index'
-import { isPlainObject } from 'is-what'
 
 test('findAndReplace in arrays', () => {
   const res = findAndReplace({ a: [{ b: 'c' }] }, 'c', 'd', { checkArrayValues: true })
