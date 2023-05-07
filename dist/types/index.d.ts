@@ -1,4 +1,4 @@
-declare type Config = {
+type Config = {
     onlyPlainObjects?: boolean;
     checkArrayValues?: boolean;
 };
