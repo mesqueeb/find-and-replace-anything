@@ -1,6 +1,6 @@
 {
   "name": "find-and-replace-anything",
-  "version": "3.0.4",
+  "version": "4.0.0",
   "description": "Replace one val with another or all occurrences in an object recursively. A simple & small integration.",
   "type": "module",
   "sideEffects": false,
