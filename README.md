@@ -38,22 +38,30 @@ This will find a value inside an object and replace it with another:
 ```js
 import { findAndReplace } from 'find-and-replace-anything'
 
-findAndReplace({deep: {nested: {prop: 'a'}}}, 'a', 'b')
-  // returns
-  {deep: {nested: {prop: 'b'}}}
+findAndReplace({ deep: { nested: { prop: 'a' } } }, 'a', 'b')
+// returns
+{
+  deep: {
+    nested: {
+      prop: 'b'
+    }
+  }
+}
 
 findAndReplace('works on "exact" strings as well', 'a', 'b')
-  // returns
-  'works on "exact" strings as well'
+// returns
+;('works on "exact" strings as well')
 
 findAndReplace('a', 'a', 'b')
-  // returns
-  'b'
+// returns
+;('b')
 
 // works with other types as well:
-findAndReplace({nr: 1}, 1, 100)
-  // returns
-  {nr: 100}
+findAndReplace({ nr: 1 }, 1, 100)
+// returns
+{
+  nr: 100
+}
 ```
 
 ## find and replace IF
@@ -66,28 +74,34 @@ This will execute a provided function to every prop in the object recursively. T
 import { findAndReplaceIf } from 'find-and-replace-anything'
 
 // function that replaces 'a' with 'b'
-function checkFn (foundVal) {
+function checkFn(foundVal) {
   if (foundVal === 'a') return 'b'
   return foundVal
   // always return original foundVal when no replacement occurs
 }
 
-findAndReplaceIf({deep: {nested: {prop: 'a'}}}, checkFn)
-  // returns
-  {deep: {nested: {prop: 'b'}}}
+findAndReplaceIf({ deep: { nested: { prop: 'a' } } }, checkFn)
+// returns
+{
+  deep: {
+    nested: {
+      prop: 'b'
+    }
+  }
+}
 
-  // this is what gets executed in order:
-  checkFn({deep: {nested: {prop: 'a'}}})
-  checkFn({nested: {prop: 'a'}})
-  checkFn({prop: 'a'})
-  checkFn('a')
-  // the final execution replaces 'a' with 'b'
-  // and then returns the entire object
+// this is what gets executed in order:
+checkFn({ deep: { nested: { prop: 'a' } } })
+checkFn({ nested: { prop: 'a' } })
+checkFn({ prop: 'a' })
+checkFn('a')
+// the final execution replaces 'a' with 'b'
+// and then returns the entire object
 
 // also works on non-objects
 findAndReplace('a', checkFn)
-  // returns
-  'b'
+// returns
+;('b')
 ```
 
 ## A note on plain objects vs classes
@@ -127,21 +141,20 @@ It's literally just this:
 
 ```js
 /**
- * @param {*} target Target can be anything
- * @param {*} find val to find
- * @param {*} replaceWith val to replace
- * @returns the target with replaced values
+ * @param {any} target Target can be anything
+ * @param {any} find Val to find
+ * @param {any} replaceWith Val to replace
+ * @returns The target with replaced values
  */
-function findAndReplaceRecursively (target, find, replaceWith) {
+function findAndReplaceRecursively(target, find, replaceWith) {
   if (!isObject(target)) {
     if (target === find) return replaceWith
     return target
   }
-  return Object.keys(target)
-    .reduce((carry, key) => {
-      const val = target[key]
-      carry[key] = findAndReplaceRecursively(val, find, replaceWith)
-      return carry
-    }, {})
+  return Object.keys(target).reduce((carry, key) => {
+    const val = target[key]
+    carry[key] = findAndReplaceRecursively(val, find, replaceWith)
+    return carry
+  }, {})
 }
 ```
