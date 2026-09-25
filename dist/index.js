@@ -1,13 +1,15 @@
 import { isAnyObject, isArray, isNaNValue, isPlainObject } from 'is-what';
 /**
- * Goes through an object recursively and replaces all occurences of the `find` value with `replaceWith`. Also works no non-objects.
+ * Goes through an object recursively and replaces all occurences of the `find` value with
+ * `replaceWith`. Also works no non-objects.
  *
- * @export
  * @param target Target can be anything
- * @param find val to find
- * @param replaceWith val to replace
- * @param [config={onlyPlainObjects: false, checkArrayValues: false}]
- * @returns the target with replaced values
+ * @param find Val to find
+ * @param replaceWith Val to replace
+ * @param [config={onlyPlainObjects: false, checkArrayValues: false}] Default is `{onlyPlainObjects:
+ *   false, checkArrayValues: false}`
+ * @returns The target with replaced values
+ * @export
  */
 export function findAndReplace(target, find, replaceWith, config = { onlyPlainObjects: false, checkArrayValues: false }) {
     const _target = target;
@@ -42,13 +44,16 @@ export function _findAndReplaceIf(target, checkFn, propKey, config = { onlyPlain
     }, {});
 }
 /**
- * Goes through an object recursively and replaces all props with what's is returned in the `checkFn`. Also works on non-objects. `checkFn` is triggered on every single level of any value/object.
+ * Goes through an object recursively and replaces all props with what's is returned in the
+ * `checkFn`. Also works on non-objects. `checkFn` is triggered on every single level of any
+ * value/object.
  *
- * @export
  * @param target Target can be anything
- * @param checkFn a function that will receive the `foundVal`
- * @param [config={onlyPlainObjects: true, checkArrayValues: false}]
- * @returns the target with replaced values
+ * @param checkFn A function that will receive the `foundVal`
+ * @param [config={onlyPlainObjects: true, checkArrayValues: false}] Default is `{onlyPlainObjects:
+ *   true, checkArrayValues: false}`
+ * @returns The target with replaced values
+ * @export
  */
 export function findAndReplaceIf(target, checkFn, config = { onlyPlainObjects: true, checkArrayValues: false }) {
     return _findAndReplaceIf(target, checkFn, undefined, config);
